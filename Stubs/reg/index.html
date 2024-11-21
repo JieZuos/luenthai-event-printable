@@ -6,6 +6,9 @@
     <title>Year-End Party Cards</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -164,7 +167,7 @@
 </head>
 <body>
     <div id="excel-files">
-        <h2>Stubs - Food, Token, Raffle | <span><a href="">For Probi Employee click here</a> </span><br></h2>
+        <h2>Stubs - Food, Token, Raffle <br></h2>
         <input type="file" id="excel-file" accept=".xlsx, .xls" /><br>
         <a href="stubs.xlsx">Download Template</a>
      </div>
@@ -207,7 +210,7 @@
                                     <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
                                 </div>
                                 <div class="bottom-text">FOOD</div>
-                                <div class="series-number">Series No. ${index + 1}</div>
+                                <div class="series-number">RegularSeries No. R${index + 1}</div>
                             </div>
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
@@ -220,7 +223,7 @@
                                     <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
                                 </div>
                                 <div class="bottom-text">TOKEN</div>
-                                <div class="series-number">Series No. ${index + 1}</div>
+                                <div class="series-number">Series No. R${index + 1}</div>
                             </div>
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
@@ -233,7 +236,7 @@
                                     <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
                                 </div>
                                 <div class="bottom-text">RAFFLE</div>
-                                <div class="series-number">Series No. ${index + 1}</div>
+                                <div class="series-number">Series No. R${index + 1}</div>
                             </div>
                         `;
                         $('#card-container').append(cardHtml);

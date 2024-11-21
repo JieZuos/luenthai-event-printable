@@ -167,7 +167,7 @@
 </head>
 <body>
      <div id="excel-files">
-        <h2>Stubs - Food, Token</h2>
+        <h2>Stubs - Food</h2>
         <input type="file" id="excel-file" accept=".xlsx, .xls" /><br>
         <a href="stubs.xlsx">Download Template</a>
      </div>
@@ -210,20 +210,7 @@
                                     <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
                                 </div>
                                 <div class="bottom-text">FOOD</div>
-                                <div class="series-number">Series No. P${index + 1}</div>
-                            </div>
-                            <div class="card">
-                                <img src="luenthai.png" alt="Image">
-                                <h2>Honoring the Journey</h2><br>
-                                <h3>Celebrating Every Step Forward</h3> 
-                                <div class="details">
-                                    <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
-                                    <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
-                                    <p><strong>Name:</strong> ${row[headers.indexOf('Name')]}</p>
-                                    <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
-                                </div>
-                                <div class="bottom-text">TOKEN</div>
-                                <div class="series-number">Series No. P${index + 1}</div>
+                                <div class="series-number">Series No. T${index + 1}</div>
                             </div>
                         `;
                         $('#card-container').append(cardHtml);
