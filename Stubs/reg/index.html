@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year-End Party Cards</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 8px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0;
+            box-sizing: border-box;
+            width: 100%;
+            gap: 0;
+        }
+        .card {
+            border: 1px solid #000;
+            width: 33.33%;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+            page-break-inside: avoid;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card img {
+            display: block;
+            margin: 10px auto;
+            max-width: 100px;
+        }
+        .card h2 {
+            margin: 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .card .details {
+            font-size: 12px;
+            line-height: 1.2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .card .details p {
+            margin: 0;
+        }
+        .card .bottom-text, .card .series-number {
+            background-color: #333;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .card .bottom-text {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .card .series-number {
+            position: absolute;
+            font-size: 8px;
+            top: 10px;
+            right: 10px;
+            text-align: right;
+        }
+        @media print {
+            body {
+                font-size: 5px;
+            }
+            .card-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 100%;
+                gap: 0;
+            }
+            .card {
+                width: 33.33%;
+                margin-bottom: 1px;
+            }
+            .card h2 {
+                font-size: 10px;
+            }
+            .card img {
+                display: block;
+                margin: 0px auto;
+                max-width: 100px;
+            }
+            .card .details {
+                font-size: 10px;
+            }
+            .card .bottom-text, .card .series-number {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="excel-files">
+        <h2>Stubs - Food, Token, Raffle | <span><a href="">For Probi Employee click here</a> </span><br></h2>
+        <input type="file" id="excel-file" accept=".xlsx, .xls" /><br>
+        <a href="stubs.xlsx">Download Template</a>
+     </div>
+    <div class="card-container" id="card-container">
+        <!-- Cards will be populated here -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Handle file input change (user uploads an Excel file)
+            $('#excel-file').change(function(e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var data = event.target.result;
+                    var workbook = XLSX.read(data, { type: 'binary' });
+
+                    // Assuming the first sheet contains the data
+                    var sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                    // Extract headers and data
+                    var headers = jsonData[0]; // The first row as headers
+                    var rows = jsonData.slice(1); // The rest as rows
+
+                    // Loop through each row and create a card
+                    $('#card-container').empty();
+                    $('#excel-file').hide(); // Clear previous cards
+                    rows.forEach(function(row, index) {
+                        var cardHtml = `
+                            <div class="card">
+                                <img src="luenthai.png" alt="Image">
+                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <div class="details">
+                                    <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
+                                    <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
+                                    <p><strong>Name:</strong> ${row[headers.indexOf('Name')]}</p>
+                                    <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
+                                </div>
+                                <div class="bottom-text">FOOD</div>
+                                <div class="series-number">Series No. ${index + 1}</div>
+                            </div>
+                            <div class="card">
+                                <img src="luenthai.png" alt="Image">
+                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <div class="details">
+                                    <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
+                                    <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
+                                    <p><strong>Name:</strong> ${row[headers.indexOf('Name')]}</p>
+                                    <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
+                                </div>
+                                <div class="bottom-text">TOKEN</div>
+                                <div class="series-number">Series No. ${index + 1}</div>
+                            </div>
+                            <div class="card">
+                                <img src="luenthai.png" alt="Image">
+                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <div class="details">
+                                    <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
+                                    <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
+                                    <p><strong>Name:</strong> ${row[headers.indexOf('Name')]}</p>
+                                    <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
+                                </div>
+                                <div class="bottom-text">RAFFLE</div>
+                                <div class="series-number">Series No. ${index + 1}</div>
+                            </div>
+                        `;
+                        $('#card-container').append(cardHtml);
+                    });
+                };
+
+                reader.readAsBinaryString(file); // Read the file
+            });
+        });
+    </script>
+</body>
+</html>

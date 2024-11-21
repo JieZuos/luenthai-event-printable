@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiange</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Align items to the left */
+            margin-top: 20px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: calc(50% - 10px); /* 2 cards per row with no margin in between */
+            box-sizing: border-box;
+            page-break-inside: avoid;
+            margin: 0; /* Remove margin between cards */
+        }
+
+        .card-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Adjust for Print */
+        @media print {
+            body {
+                margin: 5px;
+                padding: 0;
+            }
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                margin: 0;
+                padding: 0;
+            }
+            .card {
+                width: calc(50% - 10px); 
+                margin: 0;
+                page-break-inside: avoid;
+                break-inside: avoid-column;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .hidden {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- File input to select Excel -->
+    <div id="excel-files">
+        <h3>Tiange | </h3><span><a href="">For Stubs click here</a> </span><br>
+        <input type="file" id="excel-file" accept=".xlsx, .xls" /><br>
+        <a href="tiange-template.xlsx">Download Template</a>
+     </div>
+
+    <!-- Container to hold all the cards -->
+    <div class="container" id="cards-container"></div>
+
+    <!-- Page break (for printing) -->
+    <div class="page-break hidden"></div>
+
+    <script>
+        $(document).ready(function() {
+            // Event listener for file input
+            $('#excel-file').on('change', function(e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var data = event.target.result;
+                    var workbook = XLSX.read(data, { type: 'binary' });
+                    var sheetName = workbook.SheetNames[0]; 
+                    var worksheet = workbook.Sheets[sheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                    generateCards(jsonData); // Pass the JSON data to generate the cards
+                    $('#excel-files').hide();  // Hide the file input after selection
+                };
+
+                reader.readAsBinaryString(file);
+            });
+
+            // Function to generate cards with data
+            function generateCards(data) {
+                $('#cards-container').empty(); // Clear any existing cards
+
+                // Loop through each row of data
+                $.each(data, function(index, row) {
+                    // Create the card
+                    var cardHtml = '<div class="card">';
+                    cardHtml += '<div class="card-header">';
+                    cardHtml += 'Series No.: ' + row['Series No.'] + '<br>';
+                    cardHtml += 'Location: ' + row['Location'] + '<br>';
+                    cardHtml += 'Department: ' + row['Department'] + '<br>';
+                    cardHtml += 'ID/Name: ' + row['ID/Name'] + '<br>';
+                    cardHtml += 'Credit Limit: ' + row['Credit Limit'];
+                    cardHtml += '</div>';
+
+                    // Create the table inside the card
+                    cardHtml += '<table>';
+                    cardHtml += '<thead>';
+                    cardHtml += '<tr><th>Date Avail</th><th>Amount</th><th>Credit Limit Bal</th></tr>';
+                    cardHtml += '</thead>';
+                    cardHtml += '<tbody>';
+                    for (var i = 0; i < 8; i++) {
+                        cardHtml += '<tr><td></td><td></td><td></td></tr>';
+                    }
+                    cardHtml += '</tbody>';
+                    cardHtml += '</table>';
+                    cardHtml += '</div>'; // Close card div
+
+                    // Append the card to the container
+                    $('#cards-container').append(cardHtml);
+
+                    // After every 6th card, add a page break for printing
+                    if ((index + 1) % 6 === 0) {
+                        $('#cards-container').append('<div class="page-break"></div>');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
