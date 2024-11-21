@@ -13,6 +13,7 @@
             font-family: Arial, sans-serif;
             font-size: 8px;
         }
+
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -22,6 +23,7 @@
             width: 100%;
             gap: 0;
         }
+
         .card {
             border: 1px solid #000;
             width: 33.33%;
@@ -34,16 +36,35 @@
             flex-direction: column;
             justify-content: space-between;
         }
+
         .card img {
             display: block;
             margin: 10px auto;
             max-width: 100px;
         }
+
         .card h2 {
-            margin: 10px 0;
-            font-size: 12px;
+            font-size: 40px;
+            font-family: "Style Script", cursive;
             font-weight: bold;
+            margin: 0;
+            /* Remove any default margin */
+            padding: 0;
+            /* Remove any default padding */
+            line-height: 1.1;
+            /* Adjust line height for better spacing */
         }
+
+        .card h3 {
+            margin-top: -5px;
+            /* Remove any default margin */
+            padding: 0;
+            /* Remove any default padding */
+            font-size: 12px;
+            line-height: 1.2;
+            /* Adjust line height if needed */
+        }
+
         .card .details {
             font-size: 12px;
             line-height: 1.2;
@@ -53,20 +74,25 @@
             margin-bottom: 20px;
             text-align: left;
         }
+
         .card .details p {
             margin: 0;
         }
-        .card .bottom-text, .card .series-number {
+
+        .card .bottom-text,
+        .card .series-number {
             background-color: #333;
             color: white;
             padding: 5px;
             font-weight: bold;
             font-size: 12px;
         }
+
         .card .bottom-text {
             text-align: center;
             margin-bottom: 5px;
         }
+
         .card .series-number {
             position: absolute;
             font-size: 8px;
@@ -74,10 +100,12 @@
             right: 10px;
             text-align: right;
         }
+
         @media print {
             body {
                 font-size: 5px;
             }
+
             .card-container {
                 display: flex;
                 flex-wrap: wrap;
@@ -85,22 +113,50 @@
                 width: 100%;
                 gap: 0;
             }
+
             .card {
                 width: 33.33%;
                 margin-bottom: 1px;
             }
+
             .card h2 {
-                font-size: 10px;
+                font-size: 16px;
+                /* Adjust size for print */
+                font-family: "Style Script", cursive;
+                /* Ensure font is applied */
+                font-weight: bold;
+                /* Keep the bold font */
+                margin-top: 5px;
+                /* Remove any margins */
+                padding: 0;
+                /* Remove any padding */
+                line-height: 1.1;
+                /* Adjust line height */
             }
+
+            .card h3 {
+                font-size: 8px;
+                /* Adjust size for h3 on print */
+                margin-top: -8px;
+                /* Remove gap between h2 and h3 */
+                padding: 0;
+                /* Remove any padding */
+                line-height: 1.2;
+                /* Adjust line height if necessary */
+            }
+
             .card img {
                 display: block;
                 margin: 0px auto;
                 max-width: 100px;
             }
+
             .card .details {
                 font-size: 10px;
             }
-            .card .bottom-text, .card .series-number {
+
+            .card .bottom-text,
+            .card .series-number {
                 font-size: 10px;
             }
         }
@@ -142,7 +198,8 @@
                         var cardHtml = `
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
-                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <h2>Honoring the Journey</h2><br>
+                                <h3>Celebrating Every Step Forward</h3>                                
                                 <div class="details">
                                     <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
                                     <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
@@ -154,7 +211,8 @@
                             </div>
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
-                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <h2>Honoring the Journey</h2><br>
+                                <h3>Celebrating Every Step Forward</h3> 
                                 <div class="details">
                                     <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
                                     <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
@@ -166,7 +224,8 @@
                             </div>
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
-                                <h2>VERTE YEAR END PARTY 2024</h2>
+                                <h2>Honoring the Journey</h2><br>
+                                <h3>Celebrating Every Step Forward</h3> 
                                 <div class="details">
                                     <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
                                     <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
