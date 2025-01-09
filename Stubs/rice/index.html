@@ -6,6 +6,7 @@
     <title>Rice Stubs</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet">
@@ -51,21 +52,15 @@
             font-family: "Style Script", cursive;
             font-weight: bold;
             margin: 0;
-            /* Remove any default margin */
             padding: 0;
-            /* Remove any default padding */
             line-height: 1.1;
-            /* Adjust line height for better spacing */
         }
 
         .card h3 {
             margin-top: -5px;
-            /* Remove any default margin */
             padding: 0;
-            /* Remove any default padding */
             font-size: 12px;
             line-height: 1.2;
-            /* Adjust line height if needed */
         }
 
         .card .details {
@@ -104,10 +99,28 @@
             text-align: right;
         }
 
+        .card svg {
+            display: block;
+            margin: 10px auto;
+            width: 250px;  /* Adjust the width as needed */
+            height: 50px;  /* Crop the height as needed */
+            object-fit: cover;  /* This ensures the barcode will be cropped according to the height */
+        }
+
+
         @media print {
             body {
                 font-size: 5px;
             }
+            .card svg {
+                display: block;
+                margin: 10px auto;
+                width: 250px;  /* Adjust the width as needed */
+                height: 50px;  /* Crop the height as needed */
+                object-fit: cover;  /* This ensures the barcode will be cropped according to the height */
+            }
+
+
 
             .card-container {
                 display: flex;
@@ -124,28 +137,18 @@
 
             .card h2 {
                 font-size: 16px;
-                /* Adjust size for print */
                 font-family: "Style Script", cursive;
-                /* Ensure font is applied */
                 font-weight: bold;
-                /* Keep the bold font */
                 margin-top: 5px;
-                /* Remove any margins */
                 padding: 0;
-                /* Remove any padding */
                 line-height: 1.1;
-                /* Adjust line height */
             }
 
             .card h3 {
                 font-size: 8px;
-                /* Adjust size for h3 on print */
                 margin-top: -8px;
-                /* Remove gap between h2 and h3 */
                 padding: 0;
-                /* Remove any padding */
                 line-height: 1.2;
-                /* Adjust line height if necessary */
             }
 
             .card img {
@@ -166,11 +169,11 @@
     </style>
 </head>
 <body>
-     <div id="excel-files">
+    <div id="excel-files">
         <h2>Stubs - Rice</h2>
         <input type="file" id="excel-file" accept=".xlsx, .xls" /><br>
         <a href="stubs.xlsx">Download Template</a>
-     </div>
+    </div>
     <div class="card-container" id="card-container">
         <!-- Cards will be populated here -->
     </div>
@@ -198,13 +201,13 @@
                     $('#card-container').empty();
                     $('#excel-files').hide(); // Clear previous cards
                     rows.forEach(function(row, index) {
+                        var empId = row[headers.indexOf('EmpID')]; // Get EmpID value
                         var cardHtml = `
                             <div class="card">
                                 <img src="luenthai.png" alt="Image">
-                                <h2>Honoring the Journey</h2><br>
-                                <h3>Celebrating Every Step Forward</h3>                                
+                                <svg id="barcode-${index}"></svg> 
                                 <div class="details">
-                                    <p><strong>EmpID:</strong> ${row[headers.indexOf('EmpID')]}</p>
+                                    <p><strong>EmpID:</strong> ${empId}</p>
                                     <p><strong>Pos:</strong> ${row[headers.indexOf('Pos')]}</p>
                                     <p><strong>Name:</strong> ${row[headers.indexOf('Name')]}</p>
                                     <p><strong>Dept:</strong> ${row[headers.indexOf('Dept')]}</p>
@@ -214,6 +217,13 @@
                             </div>
                         `;
                         $('#card-container').append(cardHtml);
+
+                        // Generate barcode for the current EmpID
+                        JsBarcode(`#barcode-${index}`, empId, {
+    displayValue: true,
+    height: 50  // Crop the height of the barcode
+});
+
                     });
                 };
 
